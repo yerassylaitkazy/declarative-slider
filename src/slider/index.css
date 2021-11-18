@@ -9,7 +9,11 @@
 
 .slider--item {
     flex: none;
-    height: 100%;
-    width: 300px;
-    background: tomato;
+    box-sizing: content-box;
+}
+
+.slider--end-spacer {
+    flex: none;
+    height: 0;
+    width: 10000px;
 }

@@ -1,64 +1,74 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useContext } from 'react';
+import { SliderState, SliderContext } from './state';
+import { SliderRoot } from './root';
+import { SliderItem } from './item';
 import './index.css';
 
-const getPositionX = el => {
-    return el.offsetLeft;
-}
+const MyCustomSliderControls = () => {
+    const { onNext, onPrev, count, position, overflows } = useContext(SliderContext);
 
-export const SliderItem = (props) => {
-    const { position, uniq, children } = props;
-    const itemRef = useRef();
-
-    useEffect(() => {
-        if (position === uniq) {
-            const parentElement = itemRef.current.parentElement;
-            const scrollableElement = itemRef.current;
-            const diff = getPositionX(scrollableElement) - getPositionX(parentElement);
-            parentElement.scroll({ left: diff, behavior: "smooth" })
-        }
-    }, [position, uniq]);
-
-    return <div position-attribute={uniq} className="slider--item" ref={itemRef}>{children}</div>
-}
-
-export const SliderRoot = () => {
-    const [start, setStart] = useState(0);
-    const [count, setCount] = useState(0);
-    const rootRef = useRef();
-
-    
-    useEffect(() => {
-        const items = Array.from(rootRef.current.getElementsByClassName("slider--item")) || [];
-        setCount(items.length);
-    }, []);
-
-    const handleNext = () => {
-        if (start < (count - 1)) {
-            setStart(start + 1);
-        }
-    };
-
-    const handlePrev = () => {
-        if (start > 0) {
-            setStart(start - 1);
-        }
+    if (overflows) {
+        return <div>
+            <button disabled={position === 0} onClick={onPrev} type="button">{"<<"}</button>
+            <button disabled={position === count - 1} onClick={onNext} type="button">{">>"}</button>
+        </div>;
     }
 
-    return <div>
-        <div>
-            <button disabled={start === 0} onClick={handlePrev}>prev</button>
-            <button disabled={start === count - 1} onClick={handleNext}>next</button>
-        </div>
-        <div ref={rootRef} className="slider--root">
-            <SliderItem uniq={0} position={start}><div>0</div></SliderItem>
-            <SliderItem uniq={1} position={start}><div>1</div></SliderItem>
-            <SliderItem uniq={2} position={start}><div>2</div></SliderItem>
-            <SliderItem uniq={3} position={start}><div>3</div></SliderItem>
-            <SliderItem uniq={4} position={start}><div>4</div></SliderItem>
-            <SliderItem uniq={5} position={start}><div>5</div></SliderItem>
-            <SliderItem uniq={6} position={start}><div>6</div></SliderItem>
-            <SliderItem uniq={7} position={start}><div>7</div></SliderItem>
-            <div style={{ flex: 'none', width: 10000 }}></div>
-        </div>
-    </div>
-};
+    return null
+}
+
+export const MySlider = () => {
+    return <SliderState>
+        <MyCustomSliderControls />
+        <SliderRoot>
+            <SliderItem uniq={0}>
+                <div style={{ width: 400, height: 300, marginRight: 20, background: 'tomato', borderRadius: 20, padding: 20, boxSizing: 'border-box' }}>0</div>
+            </SliderItem>
+            <SliderItem  uniq={1}>
+                <div style={{ width: 400, height: 300, marginRight: 20, background: 'tomato', borderRadius: 20, padding: 20, boxSizing: 'border-box' }}>1</div>
+            </SliderItem>
+            <SliderItem  uniq={2}>
+                <div style={{ width: 400, height: 300, marginRight: 20, background: 'tomato', borderRadius: 20, padding: 20, boxSizing: 'border-box' }}>2</div>
+            </SliderItem>
+            <SliderItem  uniq={3}>
+                <div style={{ width: 400, height: 300, marginRight: 20, background: 'tomato', borderRadius: 20, padding: 20, boxSizing: 'border-box' }}>3</div>
+            </SliderItem>
+            <SliderItem uniq={4}>
+                <div style={{ width: 400, height: 300, marginRight: 20, background: 'tomato', borderRadius: 20, padding: 20, boxSizing: 'border-box' }}>0</div>
+            </SliderItem>
+            <SliderItem  uniq={5}>
+                <div style={{ width: 400, height: 300, marginRight: 20, background: 'tomato', borderRadius: 20, padding: 20, boxSizing: 'border-box' }}>1</div>
+            </SliderItem>
+            <SliderItem  uniq={6}>
+                <div style={{ width: 400, height: 300, marginRight: 20, background: 'tomato', borderRadius: 20, padding: 20, boxSizing: 'border-box' }}>2</div>
+            </SliderItem>
+            <SliderItem  uniq={7}>
+                <div style={{ width: 400, height: 300, marginRight: 20, background: 'tomato', borderRadius: 20, padding: 20, boxSizing: 'border-box' }}>3</div>
+            </SliderItem>
+            <SliderItem uniq={8}>
+                <div style={{ width: 400, height: 300, marginRight: 20, background: 'tomato', borderRadius: 20, padding: 20, boxSizing: 'border-box' }}>0</div>
+            </SliderItem>
+            <SliderItem  uniq={9}>
+                <div style={{ width: 400, height: 300, marginRight: 20, background: 'tomato', borderRadius: 20, padding: 20, boxSizing: 'border-box' }}>1</div>
+            </SliderItem>
+            <SliderItem  uniq={10}>
+                <div style={{ width: 400, height: 300, marginRight: 20, background: 'tomato', borderRadius: 20, padding: 20, boxSizing: 'border-box' }}>2</div>
+            </SliderItem>
+            <SliderItem  uniq={11}>
+                <div style={{ width: 400, height: 300, marginRight: 20, background: 'tomato', borderRadius: 20, padding: 20, boxSizing: 'border-box' }}>3</div>
+            </SliderItem>
+            <SliderItem uniq={12}>
+                <div style={{ width: 400, height: 300, marginRight: 20, background: 'tomato', borderRadius: 20, padding: 20, boxSizing: 'border-box' }}>0</div>
+            </SliderItem>
+            <SliderItem  uniq={13}>
+                <div style={{ width: 400, height: 300, marginRight: 20, background: 'tomato', borderRadius: 20, padding: 20, boxSizing: 'border-box' }}>1</div>
+            </SliderItem>
+            <SliderItem  uniq={14}>
+                <div style={{ width: 400, height: 300, marginRight: 20, background: 'tomato', borderRadius: 20, padding: 20, boxSizing: 'border-box' }}>2</div>
+            </SliderItem>
+            <SliderItem  uniq={15}>
+                <div style={{ width: 400, height: 300, marginRight: 20, background: 'tomato', borderRadius: 20, padding: 20, boxSizing: 'border-box' }}>3</div>
+            </SliderItem>
+        </SliderRoot>
+    </SliderState>
+}
